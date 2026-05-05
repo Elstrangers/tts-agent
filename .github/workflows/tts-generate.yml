@@ -1,0 +1,102 @@
+name: Generate Speech
+
+on:
+  workflow_dispatch:
+    inputs:
+      transcript:
+        description: 'Text transcript to convert to speech (can include [descriptions])'
+        required: true
+        type: string
+      voice:
+        description: 'Voice name (default: Orus) - Examples: Orus, Achernar, Pax, Sage'
+        required: false
+        type: string
+        default: 'Orus'
+      audio_profile:
+        description: 'Audio profile description (default: smooth premium commercial)'
+        required: false
+        type: string
+        default: 'A smooth, premium commercial voice.'
+      style:
+        description: 'Voice style (default: Natural) - Examples: Promo/Hype, Calm, Energetic, Informative, Dramatic, Conversational'
+        required: false
+        type: string
+        default: 'Natural'
+      pace:
+        description: 'Speech pace (default: Natural) - Options: Slow, Natural, Fast'
+        required: false
+        type: string
+        default: 'Natural'
+      accent:
+        description: 'Accent (default: American Gen) - Examples: American (Gen), British, Indian, Australian, Canadian'
+        required: false
+        type: string
+        default: 'American (Gen)'
+      description:
+        description: 'Description for output filename (optional, auto-extracted from [brackets] if omitted)'
+        required: false
+        type: string
+      directors_note:
+        description: 'Director''s note for voice direction (optional) - Format: "Style: X. Pace: Y. Accent: Z."'
+        required: false
+        type: string
+
+jobs:
+  generate-speech:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-genai
+      
+      - name: Generate speech
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python tts_generator.py \
+            "${{ inputs.transcript }}" \
+            --voice "${{ inputs.voice }}" \
+            --audio-profile "${{ inputs.audio_profile }}" \
+            --style "${{ inputs.style }}" \
+            --pace "${{ inputs.pace }}" \
+            --accent "${{ inputs.accent }}" \
+            ${{ inputs.description && format('--description "{0}"', inputs.description) || '' }} \
+            ${{ inputs.directors_note && format('--directors-note "{0}"', inputs.directors_note) || '' }} \
+            --output-dir ./generated-audio
+      
+      - name: Upload artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-audio
+          path: ./generated-audio/
+          retention-days: 30
+      
+      - name: Create release with audio
+        if: success()
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: audio-${{ github.run_number }}
+          release_name: Generated Audio - Run #${{ github.run.number }}
+          body: |
+            Generated speech with settings:
+            - Voice: ${{ inputs.voice }}
+            - Style: ${{ inputs.style }}
+            - Pace: ${{ inputs.pace }}
+            - Accent: ${{ inputs.accent }}
+            - Audio Profile: ${{ inputs.audio_profile }}
+            
+            Description: ${{ inputs.description || 'N/A' }}
+            Directors Note: ${{ inputs.directors_note || 'N/A' }}
