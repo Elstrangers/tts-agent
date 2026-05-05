@@ -1,0 +1,54 @@
+{
+  "voices": {
+    "Orus": {
+      "name": "Orus",
+      "description": "Soft, Higher pitch",
+      "profiles": ["commercial", "friendly", "narrative"]
+    },
+    "Achernar": {
+      "name": "Achernar",
+      "description": "Soft, Higher pitch",
+      "profiles": ["commercial", "friendly", "narrative"]
+    },
+    "Pax": {
+      "name": "Pax",
+      "description": "Deep, warm, authoritative",
+      "profiles": ["narrator", "documentary", "commercial"]
+    },
+    "Sage": {
+      "name": "Sage",
+      "description": "Clear, professional, informative",
+      "profiles": ["educational", "corporate", "technical"]
+    }
+  },
+  "audio_profiles": {
+    "commercial": "A smooth, premium commercial voice.",
+    "friendly": "A warm, friendly, and approachable voice.",
+    "narrator": "A professional narrator voice for storytelling.",
+    "documentary": "A documentary-style narrator voice.",
+    "educational": "A clear educational voice for learning content.",
+    "corporate": "A professional corporate and business voice."
+  },
+  "styles": [
+    "Natural",
+    "Promo/Hype",
+    "Calm",
+    "Energetic",
+    "Informative",
+    "Dramatic",
+    "Conversational"
+  ],
+  "paces": [
+    "Slow",
+    "Natural",
+    "Fast"
+  ],
+  "accents": [
+    "American (Gen)",
+    "American (Southern)",
+    "British",
+    "Canadian",
+    "Indian",
+    "Australian"
+  ]
+}
