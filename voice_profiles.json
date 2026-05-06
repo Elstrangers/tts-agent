@@ -19,6 +19,11 @@
       "name": "Sage",
       "description": "Clear, professional, informative",
       "profiles": ["educational", "corporate", "technical"]
+    },
+    "Rajinikanth": {
+      "name": "Rajinikanth",
+      "description": "Deep, commanding, legendary Tamil superstar voice",
+      "profiles": ["dramatic", "cinematic", "authoritative", "commercial"]
     }
   },
   "audio_profiles": {
@@ -27,7 +32,10 @@
     "narrator": "A professional narrator voice for storytelling.",
     "documentary": "A documentary-style narrator voice.",
     "educational": "A clear educational voice for learning content.",
-    "corporate": "A professional corporate and business voice."
+    "corporate": "A professional corporate and business voice.",
+    "dramatic": "A powerful, dramatic, commanding voice for cinema and theater.",
+    "cinematic": "A legendary cinematic voice with theatrical presence and impact.",
+    "authoritative": "An authoritative, powerful, and commanding presence."
   },
   "styles": [
     "Natural",
@@ -36,7 +44,10 @@
     "Energetic",
     "Informative",
     "Dramatic",
-    "Conversational"
+    "Conversational",
+    "Intense",
+    "Commanding",
+    "Theatrical"
   ],
   "paces": [
     "Slow",
@@ -49,6 +60,8 @@
     "British",
     "Canadian",
     "Indian",
-    "Australian"
+    "Australian",
+    "Tamil",
+    "South Indian"
   ]
 }
